@@ -42,7 +42,7 @@ let books = [
 
 //Root
 app.get('/', (req, res) => {
-    res.send('<h1>Welcome to the root page!</h1>');
+    res.send('<h1>WELCOME TO THE ROOT PAGE!</h1>');
 });
 
 //Retrieve all books
