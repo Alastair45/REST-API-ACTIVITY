@@ -83,20 +83,32 @@ app.patch('/books/:id', (req, res) => {
 });
 
 //Delete a certain book
-app.delete('/books/:id', (req, res) => {
+app.delete('/books/:id', (req, res) =>
+    {
     const id = parseInt(req.params.id);
     const index = books.findIndex((element) => element.id === id);
-    if (index < 0 || index >= books.length) {
+    if (index < 0 || index >= books.length)
+        {
         return res.status(400).json({ message: "No book found in index " + id});
-    }
+        }
     books.splice(index, 1);
     res.json({message: "Item deleted successfully!"});
+    });
+
+//Login
+app.post('/books/login', (req, res) => {
+    const {username, password} = req.body;
+
+    if (username === 'Alastair45' && password === 'ZinogreSlayer45')
+    {
+        res.json({message: "Login Success!"});
+    }
+    else
+    {
+        res.status(404).json({message: "Invalid Username or Password"});
+    }
 });
 
 app.listen(port, () => {
     console.log(`API running on http://localhost:${port}`);
-});
-
-    eeeee
-
-eeee
+})
