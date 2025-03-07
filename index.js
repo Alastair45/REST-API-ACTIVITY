@@ -76,17 +76,19 @@ app.post('/books', (req, res) => {
 app.patch('/books/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = books.findIndex((element) => element.id === id);
-    const book = books[index];
-    if (req.body.title) books.title = req.body.title;
-    if (req.body.auhtor) books.author = req.body.author;
-    if (req.body.publisher) books.publisher = req.body.publisher;
-    res.json(book);
+    if (index === -1) return res.status(404).json({error: "Book Not Found"});
+    
+    books[index] = { ...books[index], ...req.body};
+    res.json({message: "Book Updated", book: books[index]});
 });
 
 //Delete a certain book
 app.delete('/books/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = books.findIndex((element) => element.id === id);
+    if (index < 0 || index >= books.length) {
+        return res.status(400).json({ message: "No book found in index " + id});
+    }
     books.splice(index, 1);
     res.json({message: "Item deleted successfully!"});
 });
